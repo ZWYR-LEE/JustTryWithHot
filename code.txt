@@ -2,3 +2,4 @@ this is the first line
 this is the second line
 this is the third line
 let's see about the diff of two modify
+this is a new line in dev branch
