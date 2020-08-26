@@ -6,3 +6,4 @@ this is a new line in dev branch
 this is a new line in master branch
 this is a new line of dev branchs
 merge method personly make
+llll add a new line
