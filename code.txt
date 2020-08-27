@@ -19,4 +19,4 @@ add a new line to show stath
 add a new line on dev with stath
 
 
-on update project process
+修复了一个bug，在master上建立的bug分支bug-oo1做的修改
