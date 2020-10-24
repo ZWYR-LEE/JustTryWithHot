@@ -1,0 +1,66 @@
+启动项目报错：
+Caused by: java.io.IOException: Too many open files
+        at sun.nio.ch.IOUtil.makePipe(Native Method) ~[na:1.8.0_232]
+        at sun.nio.ch.EPollSelectorImpl.<init>(EPollSelectorImpl.java:65) ~[na:1.8.0_232]
+        at sun.nio.ch.EPollSelectorProvider.openSelector(EPollSelectorProvider.java:36) ~[na:1.8.0_232]
+        at org.xnio.nio.NioXnio$DefaultSelectorCreator.open(NioXnio.java:247) ~[xnio-nio-3.3.6.Final.jar!/:3.3.6.Final]
+        at org.xnio.nio.NioXnioWorker.<init>(NioXnioWorker.java:97) ~[xnio-nio-3.3.6.Final.jar!/:3.3.6.Final]
+        at org.xnio.nio.NioXnio.createWorker(NioXnio.java:202) ~[xnio-nio-3.3.6.Final.jar!/:3.3.6.Final]
+        at org.xnio.Xnio.createWorker(Xnio.java:466) ~[xnio-api-3.3.6.Final.jar!/:3.3.6.Final]
+        at org.xnio.Xnio.createWorker(Xnio.java:453) ~[xnio-api-3.3.6.Final.jar!/:3.3.6.Final]
+        at io.undertow.Undertow.start(Undertow.java:118) ~[undertow-core-1.4.13.Final.jar!/:1.4.13.Final]
+        ... 19 common frames omitted
+
+java.io.IOException: Too many open files 
+意思是文件句柄打开超过限制，导致服务不可用
+
+命令ulimit -a 查看open file设置 1024为默认设置，太小
+[root@bogon zuul]# ulimit -a
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 31201
+max locked memory       (kbytes, -l) 64
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 1024
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 8192
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 31201
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+[root@bogon zuul]#
+
+
+修改 /etc/security/limits.conf
+# End of file
+* soft nofile 1024 ——> soft nofile 65535
+* hard nofile 1024 ——> hard nofile 65535
+
+查看项目运行打开的文件数
+lsof -p <pid> |wc -l
+
+查看项目本身设置的可打开文件数
+cat /proc/<pid>/limits   --->看open files 一行的大小
+太小可以直接vim /proc/<pid>/limits直接编辑
+[root@bogon zuul]# cat /proc/16302/limits 
+Limit                     Soft Limit           Hard Limit           Units     
+Max cpu time              unlimited            unlimited            seconds   
+Max file size             unlimited            unlimited            bytes     
+Max data size             unlimited            unlimited            bytes     
+Max stack size            8388608              unlimited            bytes     
+Max core file size        0                    unlimited            bytes     
+Max resident set          unlimited            unlimited            bytes     
+Max processes             31201                31201                processes 
+Max open files            65535                65535                files     
+Max locked memory         65536                65536                bytes     
+Max address space         unlimited            unlimited            bytes     
+Max file locks            unlimited            unlimited            locks     
+Max pending signals       31201                31201                signals   
+Max msgqueue size         819200               819200               bytes     
+Max nice priority         0                    0                    
+Max realtime priority     0                    0                    
+Max realtime timeout      unlimited            unlimited            us        
