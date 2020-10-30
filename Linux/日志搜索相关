@@ -1,0 +1,7 @@
+查询多个关键同时出现的日志数量
+grep -o '【优化需求~确认借款】end，uuid' nohup.out|wc -l |grep -o 'code=1, message=Abnormal data, please contact Customer Service!, data={}' nohup.out |wc -l
+
+查询多个关键字同时出现的日志
+grep -n '【优化需求~确认借款】end，uuid' nohup.out |grep -n 'code=1, message=Abnormal data, please contact Customer Service!, data={}'
+如想查询前后的日志需两个grep后都加 '-行数'
+grep -10 '【优化需求~确认借款】end，uuid' nohup.out |grep -10 'code=1, message=Abnormal data, please contact Customer Service!, data={}'
