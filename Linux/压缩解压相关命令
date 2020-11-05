@@ -3,3 +3,6 @@
  
  解压缩
  tar -zxvf 文件名
+
+zip文件解压
+unzip 文件名
