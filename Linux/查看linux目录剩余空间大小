@@ -1,0 +1,50 @@
+查看linux目录剩余空间大小
+df -hl
+[bigdata@sass-bigdate-1 logs]$ df -hl
+文件系统			容量	  已用  可用  已用% 挂载点
+Filesystem      Size  Used Avail Use% Mounted on
+devtmpfs        7.8G     0  7.8G   0% /dev
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+tmpfs           7.8G  129M  7.7G   2% /run
+tmpfs           7.8G     0  7.8G   0% /sys/fs/cgroup
+/dev/vda1        40G  3.3G   34G   9% /
+/dev/vdb1        99G  4.2G   90G   5% /opt
+tmpfs           1.6G     0  1.6G   0% /run/user/1003
+tmpfs           1.6G     0  1.6G   0% /run/user/1000
+
+
+下面是相关命令的解释：
+df -hl 查看磁盘剩余空间
+df -h 查看每个根路径的分区大小
+du -sh [目录名] 返回该目录的大小
+du -sm [文件夹] 返回该文件夹总M数
+更多功能可以输入一下命令查看：
+df --help
+du --help
+ 
+查看linux文件目录的大小和文件夹包含的文件数
+统计总数大小
+du -sh xmldb/
+du -sm * | sort -n //统计当前目录大小 并安大小 排序
+du -sk * | sort -n
+du -sk * | grep guojf //看一个人的大小
+du -m | cut -d "/" -f 2 //看第二个/ 字符前的文字
+ 
+查看此文件夹有多少文件 /*/*/* 有多少文件
+du xmldb/
+du xmldb/*/*/* |wc -l
+40752
+解释：
+wc [-lmw]
+参数说明：-l :多少行；-m:多少字符；-w:多少字
+ 
+两个命令df 、du结合比较直观
+
+df    -h                     查看整台服务器的硬盘使用情况
+
+cd    /                       进入根目录
+
+du   -sh    *              查看每个文件夹的大小
+
+这样的组合可以快速定位大文件和分区满了
+
