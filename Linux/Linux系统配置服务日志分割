@@ -1,0 +1,31 @@
+整理分割日志文件、清理日志文件相关命令
+1、首先在/etc/logrotate.d/目录创建一个tomcat文档，内容如下：
+/data/apache-tomcat-9.0.13/logs/catalina.out
+{
+    copytruncate
+    daily   
+    rotate 10
+    compress   
+    missingok   
+    size 16M  
+}
+1.配置详解
+/data/apache-tomcat-9.0.13/logs/catalina.out    #服务器中catalina.out存放地址
+copytruncate    #拷贝原日志文件，并将其大小变为0
+daily    #每天切割
+rotate 10    #保留最多10个文件
+compress   #压缩分割后的文件
+missingok   #文件丢失了，继续切割而不报错
+size 16M     #当catalina.out文件大于16M时，就切割
+
+2、自动切割
+每天晚上，cron daemon会自动执行/etc/cron.daily目录下的任务
+这个会触发/etc/cron.daily/logrotate文件，logrotate一般是随linux安装的。它会执行这个命令-“/etc/sbin/logrotate /etc/logrotate.conf”(注意空格)
+/etc/logrotate.conf 包含了/etc/logrotate.d目录下的所有脚本
+这个会触发上一步写的/etc/logrotate.d/tomcat文件
+
+3、手动切割
+执行以下语句来手动运行cron任务
+/usr/sbin/logrotate /etc/logrotate.conf
+
+
