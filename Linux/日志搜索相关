@@ -5,3 +5,7 @@ grep -o '【优化需求~确认借款】end，uuid' nohup.out|wc -l |grep -o 'co
 grep -n '【优化需求~确认借款】end，uuid' nohup.out |grep -n 'code=1, message=Abnormal data, please contact Customer Service!, data={}'
 如想查询前后的日志需两个grep后都加 '-行数'
 grep -10 '【优化需求~确认借款】end，uuid' nohup.out |grep -10 'code=1, message=Abnormal data, please contact Customer Service!, data={}'
+
+
+导出符合查询条件的日志到指定文件
+grep 'aaa' nohup.out | grep '2020-02-03 [13-15]' > /home/jump/ttt.txt
