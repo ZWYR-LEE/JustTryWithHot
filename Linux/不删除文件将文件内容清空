@@ -1,0 +1,5 @@
+不删除文件，将文件内容清空
+1.> a.txt
+2.echo "" > a.txt (亲测较快)
+3.cat /dev/null > a.txt
+
