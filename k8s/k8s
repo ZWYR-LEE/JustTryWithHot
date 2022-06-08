@@ -4,3 +4,5 @@ kubectl get svc -n baikal
 kubectl get pods -n baikal
 本地做端口转发到远程服务中的k8s集群中,xxxx为远程服务器中需要连接的pods名
 kubectl port-forward xxxx --namespace yyy 8081:8080
+
+k8s可以做nodeport,提供IP和端口供外部访问（待了解）
