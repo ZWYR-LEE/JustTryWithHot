@@ -6,3 +6,6 @@ kubectl get pods -n baikal
 kubectl port-forward xxxx --namespace yyy 8081:8080
 
 k8s可以做nodeport,提供IP和端口供外部访问（待了解）
+
+进入pod
+kubectl exec -ti <your-pod-name>  -n <your-namespace>  -- /bin/sh
