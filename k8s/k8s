@@ -9,3 +9,6 @@ k8s可以做nodeport,提供IP和端口供外部访问（待了解）
 
 进入pod
 kubectl exec -ti <your-pod-name>  -n <your-namespace>  -- /bin/sh
+
+查看项目日志
+kubectl logs -f --tail=200 pods/pod's name -n namespace
